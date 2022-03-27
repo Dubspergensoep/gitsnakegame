@@ -23,6 +23,12 @@ class Snake:
 			board[coord[0]][coord[1]]=1
 		print(board)
 
+	def GetBoard(self):
+		board = np.zeros((self.size, self.size))
+		for coord in self.snakeArr:
+			board[coord[0]][coord[1]] = 1
+		return board
+
 	def Update(self):
 		if(self.SnakeAlive):
 			#Update snake position
@@ -53,6 +59,9 @@ class Snake:
 
 	def GetApple(self):
 		return self.apple
+
+	def GetDir(self):
+		return self.direction
 
 	def ChangeDirection(self,Dir):
 		if Dir=="u" and self.direction != [0, 1]:

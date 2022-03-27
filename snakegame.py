@@ -15,16 +15,18 @@ ClearCount=0
 #intializing Snake
 SnakeGame=sn.Snake(GameSize)
 
+# dataset variables
+snakehistory = np.array([])
+directionhistory = np.array([])
+
 #initializing Pygame
 pygame.init()
 size=width, heigth=GameSize*TileSize, GameSize*TileSize
 screen = pygame.display.set_mode(size)
 
-
-
 #Run game
 print("game starts running")
-while 1:
+while SnakeGame.SnakeAlive:
 	for event in pygame.event.get():
 		if event.type==pygame.QUIT:
 			sys.exit()
@@ -36,25 +38,16 @@ while 1:
 			SnakeGame.ChangeDirection("r")
 		elif event.type==pygame.KEYDOWN	and event.key==pygame.K_LEFT:
 			SnakeGame.ChangeDirection("l")
-
-	#keys=pygame.key.get_pressed()
-	#if keys[pygame.K_LEFT]:
-	#	SnakeGame.ChangeDirection("l")
-	#	keys=pygame.key.get_pressed()
-	#elif keys[pygame.K_RIGHT]:
-	#	SnakeGame.ChangeDirection("r")
-	#	keys=pygame.key.get_pressed()
-	#elif keys[pygame.K_UP]:
-	#	SnakeGame.ChangeDirection("u")
-	#	keys=pygame.key.get_pressed()
-	#elif keys[pygame.K_DOWN]:
-	#	SnakeGame.ChangeDirection("d")
-	#	keys=pygame.key.get_pressed()
-
             			
 	#update snake game
 	SnakeGame.Update()
 	SnakeArr=SnakeGame.GetSnakeArray()
+
+	# Save game data
+	snakehistory = np.append(snakehistory,SnakeGame.snakeArr)
+	directionhistory = np.append(directionhistory,SnakeGame.GetDir())
+	print([SnakeGame.snakeArr,SnakeGame.GetDir()])
+
 
 	#drawing snakeGame
 	screen.fill(BackgroundColor)
@@ -66,8 +59,9 @@ while 1:
 	
 	#Waiting
 	pygame.time.wait(WaitingTime)
-	
-	
+
+print(snakehistory[-10:-1])
+sys.exit()
 
 
 
